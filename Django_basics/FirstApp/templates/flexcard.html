@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info</title>
+    <link rel="stylesheet" href="{% static 'css/flexcard.css' %}">
+</head>
+<body>
+  {% if logo %}
+  {% for i in logo%}
+  <header class="header-top">
+    <div class="logo">
+    <img src="{{ i.image.url }}" alt="image" height="25px" width="20px" >Saugat
+  </div>
+  <div class="url_name">
+  <ol>
+    <li id="list"><a href="{% url 'home' %}">Home</a></li>
+      <li id="list"><a href="{% url 'time' %}">Time</a></li>
+      <li id="list"><a href="{% url 'second' %}">Info</a></li>
+    </ol>
+  </div>
+  </p>
+  </header>
+  {% endfor %}
+  {% endif %}
+
+  {% if info %}
+  <div class="container">
+      {% for li in info %}
+      <div class="card" style="width: 18rem; border:1px black solid; margin: 10px;">  
+        <div class="card_photo">
+          <img src="{{ li.image.url }}" class="card-img-top" alt="..." height="200px" width="300px">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Name:{{li.name}}</h5>
+          <p class="card-text">class:{{li.clss_no}}<br>
+          Mark Obtained:{{li.Mark}}</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+      <p>Database not found!</p>
+  {% endif %}
+</div>
+</body>
+</html>
