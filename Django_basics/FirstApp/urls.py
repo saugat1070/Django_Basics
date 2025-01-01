@@ -8,4 +8,5 @@ urlpatterns = [
     path('third/',views.Time,name='time'),
     path('flex/',views.Student,name='flex'),
     path('student_record/',views.Student_Record,name='student_record'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
