@@ -9,4 +9,4 @@ urlpatterns = [
     path('flex/',views.Student,name='flex'),
     path('student_record/',views.Student_Record,name='student_record'),
     
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
