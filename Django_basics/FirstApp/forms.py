@@ -1,4 +1,5 @@
 from django import forms
+from django.core import ValidationError
 class StudentForm(forms.Form):
     stname = forms.CharField()
     stadd = forms.CharField()
