@@ -19,5 +19,9 @@ class StudentInfo(models.Model):
 
 class PhotoFromExternal(models.Model):
     image = models.ImageField(null=True,upload_to='images/')
+
+class form_submission(models.Model):
+    user_name = models.CharField(max_length=30)
+    user_password = models.CharField(max_length=30)
     
     

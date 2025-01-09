@@ -1,5 +1,5 @@
 from django import forms
-from django.core import ValidationError
+from django.core.exceptions import ValidationError
 class StudentForm(forms.Form):
     stname = forms.CharField()
     stadd = forms.CharField()
@@ -12,4 +12,7 @@ class StudentForm(forms.Form):
             raise ValidationError('Character of name shuold be grater than 3 and less than 10')
         
         return input_name
-    
+
+class form_submission(forms.Form):
+    user_name = forms.CharField(max_length=100)
+    user_password = forms.CharField()
