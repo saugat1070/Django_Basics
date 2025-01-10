@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+
 import datetime
 from FirstApp.models import StudentInfo
 from FirstApp.models import PhotoFromExternal
-from FirstApp.models import form_submission
+from FirstApp.models import form_submission as FormSubmission
 #from FirstApp.forms import StudentForm
+from FirstApp.forms import form_submission  
 from . import forms
 # Create your views here.
 def index(request):
@@ -38,8 +41,21 @@ def Student(request):
     dict = {'info':info,'logo':logo}
     return render(request,'flexcard.html',context=dict)
 
+
 def Student_Record(request):
-    #form = StudentFrom()
-    form = forms.StudentForm()
-    my_dict = {'form':form}
-    return render(request,'student.html',context=my_dict)
+    if request.method == 'POST':
+        form = form_submission(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['user_name']
+            password = form.cleaned_data['user_password']
+            print(f"Name:{name} \nPassword:{password}")
+            FormSubmission.objects.create(user_name=name, user_password=password)
+            
+    else:
+        form = form_submission()
+
+    return render(request, 'student.html', {'form': form})
+
+
+
+

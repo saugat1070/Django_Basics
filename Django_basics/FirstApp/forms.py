@@ -14,5 +14,6 @@ class StudentForm(forms.Form):
         return input_name
 
 class form_submission(forms.Form):
-    user_name = forms.CharField(max_length=100)
-    user_password = forms.CharField(max_length=100)
+    user_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    user_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), max_length=30)
+    
