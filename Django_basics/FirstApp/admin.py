@@ -2,7 +2,6 @@ from django.contrib import admin
 from FirstApp.models import Employee
 from FirstApp.models import StudentInfo
 from FirstApp.models import PhotoFromExternal
-from FirstApp.models import form_submission
 # Register your models here.
 class EmpolyeeAdmin(admin.ModelAdmin):
     #modelname_Admin() fixed not to be changed
@@ -18,4 +17,3 @@ class StudentInfoAdmin(admin.ModelAdmin):
 
 admin.site.register(StudentInfo,StudentInfoAdmin)
 admin.site.register(PhotoFromExternal)
-admin.site.register(form_submission)

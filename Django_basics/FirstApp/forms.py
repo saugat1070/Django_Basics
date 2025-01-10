@@ -15,4 +15,4 @@ class StudentForm(forms.Form):
 
 class form_submission(forms.Form):
     user_name = forms.CharField(max_length=100)
-    user_password = forms.CharField()
+    user_password = forms.CharField(max_length=100)
