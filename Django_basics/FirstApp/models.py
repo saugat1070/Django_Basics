@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 
 # Create your models here.
 class Employee(models.Model):
@@ -26,3 +27,7 @@ class form_submission(models.Model):
     user_password = models.CharField(max_length=30)
     
     
+class UserRegistration(models.Model):
+    email = models.EmailField()
+    name = models.CharField(max_length=20)
+    password = models.CharField(validators=[MinLengthValidator(8),MaxLengthValidator])

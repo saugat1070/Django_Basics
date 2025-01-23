@@ -10,6 +10,8 @@ from FirstApp.models import form_submission as FormSubmission
 from FirstApp.forms import form_submission  
 from . import forms
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 # Create your views here.
 def index(request):
     return HttpResponse('<h1>Hi,Welcome to Our Django Series Page</h1>')
@@ -76,28 +78,46 @@ def Student_Record(request):
     
 #     return render(request,'signin.html',{'form':form_signin})
 
+
+
 def sign_in(request):
     if request.method == "POST":
-        username = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username)
-    return render(request,'signin.html')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Successfully logged in")
+            return redirect('home')  # Redirect to home page or any other page
+        else:
+            messages.error(request, "Invalid credentials")
+            return redirect('sign_in')
+    
+    return render(request, 'signin.html')
 
 def register(request):
     if request.method == "POST":
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
         password = request.POST.get('password')
-        
-        username = email.split('@')[0]
-        User.objects.create_user(
-            username = username,
-            first_name = first_name,
-            last_name = last_name,
-            email = email
+        username = request.POST.get('username')
+
+        # Check if the username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username is already in use.")
+            return redirect('register')
+
+        # Create the user with the password set directly
+        user = User.objects.create_user(
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            password=password  # Set the password here
         )
-        User.set_password(password)
+
+        messages.success(request, "Account created successfully!")
         return redirect('sign_in')
-    return render(request,'register.html')
+
+    return render(request, 'register.html')
+
     
