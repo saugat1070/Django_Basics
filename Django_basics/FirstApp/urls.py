@@ -10,5 +10,5 @@ urlpatterns = [
     path('student_record/',views.Student_Record,name='student_record'),
     path('sign_in/',views.sign_in,name='sign_in'),
     path('register/',views.register,name='register'),
-    
+    path('id_profile/',views.id_profile,name='id_profile')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
