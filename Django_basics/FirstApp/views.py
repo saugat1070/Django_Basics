@@ -9,9 +9,9 @@ from FirstApp.models import form_submission as FormSubmission
 #from FirstApp.forms import StudentForm
 from FirstApp.forms import form_submission  
 from . import forms
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from .models import UserRegistration as User
 # Create your views here.
 def index(request):
     return HttpResponse('<h1>Hi,Welcome to Our Django Series Page</h1>')
@@ -97,23 +97,22 @@ def sign_in(request):
 
 def register(request):
     if request.method == "POST":
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
+        name = request.POST.get('name')
         password = request.POST.get('password')
-        username = request.POST.get('username')
+        email = request.POST.get('email')
 
         # Check if the username already exists
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username is already in use.")
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "email is already in use.")
             return redirect('register')
 
         # Create the user with the password set directly
         user = User.objects.create_user(
-            username=username,
-            first_name=first_name,
-            last_name=last_name,
-            password=password  # Set the password here
+            email=email,
+            name = name,
+            password=None# Set the password here
         )
+        User.set_password(password)
 
         messages.success(request, "Account created successfully!")
         return redirect('sign_in')

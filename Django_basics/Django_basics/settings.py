@@ -28,6 +28,8 @@ SECRET_KEY = 'django-insecure-o+s3i2^0itne@lawjl$i)ybp6^&24=xt9%szklok&4vgwm^*hk
 DEBUG = True
 
 ALLOWED_HOSTS = []
+#For custom Authentication
+AUTH_USER_MODEL = 'FirstApp.UserRegistration'
 
 
 # Application definition

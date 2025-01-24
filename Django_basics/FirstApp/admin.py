@@ -3,6 +3,7 @@ from FirstApp.models import Employee
 from FirstApp.models import StudentInfo
 from FirstApp.models import PhotoFromExternal
 from FirstApp.models import form_submission
+from FirstApp.models import UserRegistration
 # Register your models here.
 class EmpolyeeAdmin(admin.ModelAdmin):
     #modelname_Admin() fixed not to be changed
@@ -23,3 +24,4 @@ admin.site.register(StudentInfo,StudentInfoAdmin)
 admin.site.register(PhotoFromExternal)
 admin.site.register(form_submission,form_submissionAdmin)
 admin.site.register(Employee,EmpolyeeAdmin)
+admin.site.register(UserRegistration)
