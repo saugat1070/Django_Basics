@@ -9,6 +9,7 @@ from FirstApp.models import form_submission as FormSubmission
 #from FirstApp.forms import StudentForm
 from FirstApp.forms import form_submission  
 from . import forms
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .models import UserRegistration as User
@@ -39,9 +40,12 @@ def Time(request):
     return render(request,'time.html',context=dict)
 
 def Student(request):
-    info = StudentInfo.objects.all()
-    logo = PhotoFromExternal.objects.all()
-    dict = {'info':info,'logo':logo}
+    user =request.User
+    user_info = {
+        'Name':user.name,
+        'Email':user.email
+    }
+    
     return render(request,'flexcard.html',context=dict)
 
 
@@ -79,17 +83,19 @@ def Student_Record(request):
 #     return render(request,'signin.html',{'form':form_signin})
 
 
-
 def sign_in(request):
     if request.method == "POST":
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
+        print(f"Email: {email}, Password: {password}")
+        user = authenticate(request, username=email, password=password)
+        print(f"Authenticated User: {user}") 
         if user is not None:
             login(request, user)
             messages.success(request, "Successfully logged in")
-            return redirect('home')  # Redirect to home page or any other page
+            return redirect('id_profile')  # Redirect to home page or any other page
         else:
+            print('invalid')
             messages.error(request, "Invalid credentials")
             return redirect('sign_in')
     
@@ -110,13 +116,21 @@ def register(request):
         user = User.objects.create_user(
             email=email,
             name = name,
-            password=None# Set the password here
         )
-        User.set_password(password)
-
+        user.set_password(password)
+        user.save()
         messages.success(request, "Account created successfully!")
         return redirect('sign_in')
 
     return render(request, 'register.html')
 
+@login_required    
+def id_profile(request):
+    print(f"Request User:{request.user}")
+    user = request.user  # Ensure this is lowercase 'user'
+    user_info = {
+        'Name': user.name,
+        'Email': user.email
+    }
     
+    return render(request, 'id_profile.html', {'user': user_info})

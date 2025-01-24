@@ -17,7 +17,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = BASE_DIR/'templates'
 STATIC_DIR = BASE_DIR/'static'
 
-
+AUTHENTICATION_BACKENDS = [
+    'FirstApp.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
